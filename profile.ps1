@@ -1,4 +1,9 @@
-$rootDrive = "$env:USERPROFILE\Documents\Git\PowerShell"
+If ($env:username -eq "paul.brown.sa") {
+    $rootDrive = "C:\Users\paul.brown.sa\Documents\Git\PowerShell"
+} Else {
+    $rootDrive = "$env:USERPROFILE\Documents\Git\PowerShell"
+}
+
 
 #Restore-MDTPersistentDrive -ErrorAction SilentlyContinue | Out-Null
 New-PSDrive -Name Scripts -PSProvider FileSystem -Root $rootDrive -ErrorAction SilentlyContinue
