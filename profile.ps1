@@ -1,5 +1,5 @@
 If ($env:username -eq "paul.brown.sa") {
-    $rootDrive = "C:\Users\paul.brown.sa\Documents\Git\PowerShell"
+    $rootDrive = "C:\Users\paul.j.brown\Documents\PowerShell"
 } Else {
     $rootDrive = "$env:USERPROFILE\Documents\Git\PowerShell"
 }
@@ -15,7 +15,7 @@ if(($env:Path -split ';') -notcontains $ScriptsRoot) {
 
 Set-Location Scripts:
 
-Get-ChildItem Scripts:\Programming\GitHub\PowerShell\LoadedScripts -Recurse | %{ Unblock-File $_.FullName }
+Get-ChildItem Scripts:\LoadedScripts -Recurse | %{ Unblock-File $_.FullName }
 # Load all scripts
 Get-ChildItem (Join-Path ('Scripts:') \LoadedScripts\) | Where `
     { $_.Name -notlike '__*' -and $_.Name -like '*.ps1'} | ForEach `
