@@ -10,28 +10,12 @@ if(($env:Path -split ';') -notcontains $ScriptsRoot) {
 
 Set-Location Scripts:
 
+Get-ChildItem Scripts:\Programming\GitHub\PowerShell\LoadedScripts -Recurse | %{ Unblock-File $_.FullName }
+# Load all scripts
+Get-ChildItem (Join-Path ('Scripts:') \LoadedScripts\) | Where `
+    { $_.Name -notlike '__*' -and $_.Name -like '*.ps1'} | ForEach `
+    { . $_.FullName }
 
-If (!(Get-Item "$env:USERPROFILE\Documents\WindowsPowerShell" -ErrorAction SilentlyContinue)) {
-    New-Item -ItemType Directory -Name "WindowsPowerShell" -Path "$env:USERPROFILE\Documents\" -ErrorAction SilentlyContinue
-}
-
-# Create the links if not already there
-If (!(Get-Item "$env:USERPROFILE\Documents\WindowsPowerShell\profile.ps1" -ErrorAction SilentlyContinue) -or ((Get-Item "$env:USERPROFILE\Documents\WindowsPowerShell\profile.ps1").LastWriteTime -ne (Get-Item "Scripts:\Programming\WindowsPowerShell\profile.ps1").LastWriteTime))  {
-    Copy-Item -Path "Scripts:\Programming\WindowsPowerShell\Modules" -Destination "$env:USERPROFILE\Documents\WindowsPowerShell\Modules" -Recurse -Force -ErrorAction SilentlyContinue
-    Copy-Item -Path "Scripts:\Programming\WindowsPowerShell\Microsoft.PowerShellISE_profile.ps1" -Destination "$env:USERPROFILE\Documents\WindowsPowerShell\Microsoft.PowerShellISE_profile.ps1" -Force -ErrorAction SilentlyContinue
-    Copy-Item -Path "Scripts:\Programming\WindowsPowerShell\profile.ps1" -Destination "$env:USERPROFILE\Documents\WindowsPowerShell\profile.ps1" -Force -ErrorAction SilentlyContinue
-    # Reload the profile
-    & "$env:USERPROFILE\Documents\WindowsPowerShell\profile.ps1"
-}
-
-$load = Read-Host "Do you want to load the custom scripts? (y,n)" 
-If ($load -eq 'y') {
-    #Get-ChildItem Scripts:\Programming\GitHub\PowerShell\LoadedScripts -Recurse | %{ Unblock-File $_.FullName }
-    # Load all scripts
-    Get-ChildItem (Join-Path ('Scripts:') \Programming\GitHub\PowerShell\LoadedScripts\) | Where `
-        { $_.Name -notlike '__*' -and $_.Name -like '*.ps1'} | ForEach `
-        { . $_.FullName }
-}
 
 If (Test-IsAdmin -eq True) {
 	$Host.UI.RawUI.BackgroundColor = "darkred"
