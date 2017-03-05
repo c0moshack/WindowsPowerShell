@@ -33,7 +33,7 @@ Function Get-SCCM {
 }
 
 Function Get-CustomModules {
-	Import-Module "$rootDriveUNC\WinPE_Builder_x86.psm1" -ErrorAction SilentlyContinue
+	Import-Module "$rootDrive\WinPE_Builder_x86.psm1" -ErrorAction SilentlyContinue
 	Import-Module DISM -ErrorAction SilentlyContinue
 	Import-Module ActiveDirectory -ErrorAction SilentlyContinue
 	Import-Module TrustedPlatformModule -ErrorAction SilentlyContinue
