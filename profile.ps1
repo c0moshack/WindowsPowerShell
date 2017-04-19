@@ -1,5 +1,5 @@
 If ($env:username -eq "paul.brown.sa") {
-    $rootDrive = "C:\Users\paul.j.brown\Documents\PowerShell"
+    $rootDrive = "C:\Users\paul.j.brown\Documents\Git\PowerShell"
 } Else {
     $rootDrive = "$env:USERPROFILE\Documents\Git\PowerShell"
 }
@@ -66,7 +66,7 @@ Function <NAME> {
 	#Requires -Version 2.0 
 	#>
 	[CmdletBinding()]
-    [OutputType([psobject})}
+    [OutputType([psobject])]
     
 	Param(
 		[Parameter(
