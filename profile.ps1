@@ -4,8 +4,12 @@ If ($env:username -eq "paul.brown.sa") {
     $rootDrive = "$env:USERPROFILE\Documents\Git\PowerShell"
 }
 
+$root = $(Get-ADDomain).DistinguishedName
+$state = "NGWI"
+$searchbase = "OU=$state,OU=States,$root"
 
 #Restore-MDTPersistentDrive -ErrorAction SilentlyContinue | Out-Null
+
 New-PSDrive -Name Scripts -PSProvider FileSystem -Root $rootDrive -ErrorAction SilentlyContinue
 
 $ScriptsRoot = ";$rootDrive"
@@ -15,11 +19,13 @@ if(($env:Path -split ';') -notcontains $ScriptsRoot) {
 
 Set-Location Scripts:
 
-Get-ChildItem Scripts:\LoadedScripts -Recurse | %{ Unblock-File $_.FullName }
-# Load all scripts
-Get-ChildItem (Join-Path ('Scripts:') \LoadedScripts\) | Where `
-    { $_.Name -notlike '__*' -and $_.Name -like '*.ps1'} | ForEach `
-    { . $_.FullName }
+Function Load-Scripts {
+    Get-ChildItem Scripts:\LoadedScripts -Recurse | %{ Unblock-File $_.FullName }
+    # Load all scripts
+    Get-ChildItem (Join-Path ('Scripts:') \LoadedScripts\) | Where `
+        { $_.Name -notlike '__*' -and $_.Name -like '*.ps1'} | ForEach `
+        { . $_.FullName }
+}
 
 
 If (Test-IsAdmin -eq True) {
@@ -46,6 +52,7 @@ Function Get-CustomModules {
 	Import-Module NetAdapter -ErrorAction SilentlyContinue
 	Import-Module BitLocker -ErrorAction SilentlyContinue
 }
+
 Function New-Function {
 	$newfunction = @"
 Function <NAME> {
