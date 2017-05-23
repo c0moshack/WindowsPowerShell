@@ -27,7 +27,8 @@ Function Load-Scripts {
         { . $_.FullName }
 }
 
-
+#LoadFunction
+. Scripts:\LoadedScripts\Test-IsAdmin.ps1
 If (Test-IsAdmin -eq True) {
 	$Host.UI.RawUI.BackgroundColor = "darkred"
 	$Host.UI.RawUI.ForegroundColor = "white"
