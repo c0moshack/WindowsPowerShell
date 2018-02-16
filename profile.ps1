@@ -1,12 +1,12 @@
-If ($env:username -eq "paul.brown.sa") {
+If (($env:username -eq "paul.brown.sa") -or ($env:username -eq "548738")) {
     $rootDrive = "C:\Users\paul.j.brown\Documents\Git\PowerShell"
 } Else {
     $rootDrive = "$env:USERPROFILE\Documents\Git\PowerShell"
 }
 
-$root = $(Get-ADDomain).DistinguishedName
-$state = "NGWI"
-$searchbase = "OU=$state,OU=States,$root"
+#$root = $(Get-ADDomain).DistinguishedName
+#$state = "NGWI"
+#$searchbase = "OU=$state,OU=States,$root"
 
 #Restore-MDTPersistentDrive -ErrorAction SilentlyContinue | Out-Null
 
