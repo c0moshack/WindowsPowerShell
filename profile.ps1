@@ -1,7 +1,9 @@
 If (($env:username -eq "paul.brown.sa") -or ($env:username -eq "548738")) {
     $rootDrive = "C:\Users\paul.j.brown\Documents\Git\PowerShell"
-} Else {
+} ElseIf ((Test-Path "$env:USERPROFILE\Documents\Git\PowerShell") -eq $true ) {
     $rootDrive = "$env:USERPROFILE\Documents\Git\PowerShell"
+} Else {
+    $rootDrive = "$env:USERPROFILE\Documents\GitHub\PowerShell"
 }
 
 #$root = $(Get-ADDomain).DistinguishedName
